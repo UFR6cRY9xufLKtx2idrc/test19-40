@@ -6,7 +6,6 @@ apply plugin: 'com.github.ben-manes.versions'
 
 
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def _storeFile = properties.getProperty('storeFile')
 def _storePassword = properties.getProperty('storePassword')
 def _keyAlias = properties.getProperty('keyAlias')
