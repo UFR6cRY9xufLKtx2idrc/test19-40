@@ -22,8 +22,6 @@ import androidx.annotation.Nullable;
  * @author：luck
  * @date：2019-11-13 17:02
  * @describe：Glide加载引擎
- *
- * @see <a href="https://github.com/LuckSiege/PictureSelector/blob/3b8f1024f14daaf1a6abe96dc98684371195acb1/app/src/main/java/com/luck/pictureselector/GlideEngine.java">demo</a>
  */
 public class GlideEngine implements ImageEngine {
 
@@ -35,7 +33,7 @@ public class GlideEngine implements ImageEngine {
      * @param imageView 图片承载控件
      */
     @Override
-    public void loadImage(@NonNull Context context, @NonNull String url, @NonNull ImageView imageView) {
+    public void loadImage(Context context, String url, ImageView imageView) {
         if (!ActivityCompatHelper.assertValidRequest(context)) {
             return;
         }
@@ -44,46 +42,15 @@ public class GlideEngine implements ImageEngine {
                 .into(imageView);
     }
 
-    /**
-     * 加载指定url并返回bitmap
-     *
-     * @param context   上下文
-     * @param url       资源url
-     * @param maxWidth  资源最大加载尺寸
-     * @param maxHeight 资源最大加载尺寸
-     * @param call      回调接口
-     */
     @Override
-    public void loadImageBitmap(@NonNull Context context, @NonNull String url, int maxWidth, int maxHeight, OnCallbackListener<Bitmap> call) {
+    public void loadImage(Context context, ImageView imageView, String url, int maxWidth, int maxHeight) {
         if (!ActivityCompatHelper.assertValidRequest(context)) {
             return;
         }
         Glide.with(context)
-                .asBitmap()
-                .override(maxWidth, maxHeight)
                 .load(url)
-                .into(new CustomTarget<Bitmap>() {
-
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        if (call != null) {
-                            call.onCall(resource);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        if (call != null) {
-                            call.onCall(null);
-                        }
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-
-                });
+                .override(maxWidth, maxHeight)
+                .into(imageView);
     }
 
     /**
@@ -94,7 +61,7 @@ public class GlideEngine implements ImageEngine {
      * @param imageView 承载图片ImageView
      */
     @Override
-    public void loadAlbumCover(@NonNull Context context, @NonNull String url, @NonNull ImageView imageView) {
+    public void loadAlbumCover(Context context, String url, ImageView imageView) {
         if (!ActivityCompatHelper.assertValidRequest(context)) {
             return;
         }
@@ -117,7 +84,7 @@ public class GlideEngine implements ImageEngine {
      * @param imageView 承载图片ImageView
      */
     @Override
-    public void loadGridImage(@NonNull Context context, @NonNull String url, @NonNull ImageView imageView) {
+    public void loadGridImage(Context context, String url, ImageView imageView) {
         if (!ActivityCompatHelper.assertValidRequest(context)) {
             return;
         }
@@ -131,27 +98,28 @@ public class GlideEngine implements ImageEngine {
 
     @Override
     public void pauseRequests(Context context) {
+        if (!ActivityCompatHelper.assertValidRequest(context)) {
+            return;
+        }
         Glide.with(context).pauseRequests();
     }
 
     @Override
     public void resumeRequests(Context context) {
+        if (!ActivityCompatHelper.assertValidRequest(context)) {
+            return;
+        }
         Glide.with(context).resumeRequests();
     }
 
     private GlideEngine() {
     }
 
-    private static GlideEngine instance;
+    private static final class InstanceHolder {
+        static final GlideEngine instance = new GlideEngine();
+    }
 
     public static GlideEngine createGlideEngine() {
-        if (null == instance) {
-            synchronized (GlideEngine.class) {
-                if (null == instance) {
-                    instance = new GlideEngine();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.instance;
     }
 }
