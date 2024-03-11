@@ -22,6 +22,8 @@ import androidx.annotation.Nullable;
  * @author：luck
  * @date：2019-11-13 17:02
  * @describe：Glide加载引擎
+ *
+ * @see <a href="https://github.com/LuckSiege/PictureSelector/blob/b00ae70a0645355b319c5bc623e1df953da91b77/app/src/main/java/com/luck/pictureselector/GlideEngine.java">demo</a>
  */
 public class GlideEngine implements ImageEngine {
 
