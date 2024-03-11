@@ -96,8 +96,8 @@ dependencies {
     api 'com.nononsenseapps:filepicker:4.2.1'
 
     //PictureSelector
-    api 'io.github.lucksiege:pictureselector:v3.0.8'
-    api 'io.github.lucksiege:compress:v3.10.7'
+    api 'io.github.lucksiege:pictureselector:v3.11.2'
+    api 'io.github.lucksiege:compress:v3.11.2'
 
     //PictureUpload
     api 'org.jsoup:jsoup:1.15.3'
