@@ -68,7 +68,6 @@ android {
     }
     buildTypes {
         debug {
-            multiDexEnabled true
             applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
             if(signingConfigs.hasProperty('release')){
@@ -77,7 +76,6 @@ android {
         }
 
         alpha {
-            multiDexEnabled true
             applicationIdSuffix '.alpha'
             versionNameSuffix '-alpha'
             if(signingConfigs.hasProperty('release')){
@@ -91,13 +89,13 @@ android {
         }
 
         release {
-            multiDexEnabled true
             if (signingConfigs.hasProperty('release')) {
                 signingConfig signingConfigs.release
             }
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     buildTypes.each {
