@@ -32,7 +32,7 @@ public interface AppService {
 
     @FormUrlEncoded
     @POST("thread/page")
-    Single<String> getPostsWrapper(@Field("sid") String security, @Field("tid") String threadId, @Field("pageNo") int page);
+    Single<String> getPostsWrapper(@Field("sid") String security, @Field("tid") String threadId, @Field("pageNo") int page, @Field("pageSize") int page);
 
     @FormUrlEncoded
     @POST("thread")
