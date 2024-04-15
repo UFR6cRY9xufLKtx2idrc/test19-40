@@ -68,6 +68,7 @@ class AppPostListPagerFragment : BaseRecyclerViewFragment<AppPostsWrapper>(), On
     private var mThreadId: String? = null
     private var mPageNum: Int = 0
     private var mQuotePid: String? = null
+    private var mPageSize: Int = 40
 
     private var blacklistChanged = false
 
@@ -168,7 +169,7 @@ class AppPostListPagerFragment : BaseRecyclerViewFragment<AppPostsWrapper>(), On
     }
 
     override fun getSourceObservable(@LoadingViewModel.LoadingDef loading: Int): Single<AppPostsWrapper> {
-        var postObservable = appService.getPostsWrapper(mUser.appSecureToken, mThreadId, mPageNum)
+        var postObservable = appService.getPostsWrapper(mUser.appSecureToken, mThreadId, mPageNum, mPageSize)
                 .compose(JsonUtil.jsonSingleTransformer(AppPostsWrapper::class.java))
         val mThreadInfo = mPagerCallback?.threadInfo
         if (mThreadInfo != null) {
